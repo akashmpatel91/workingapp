@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
   get "/auth/failure" => redirect("/")
+  get "/welcome/add",to: 'welcome#add'
 
 
 

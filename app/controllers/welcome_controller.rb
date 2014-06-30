@@ -11,22 +11,27 @@ class WelcomeController < ApplicationController
     #@friends = @graph.get_connections("me", "feed")
     #puts @friends
   end
+  def add
 
+  end
   def parse
+    puts params[:uid]
+    puts params[:accessToken]
     display_commment_map = {}
     like_hash = {}
     comment_hash = {}
     common_hash = {}
     i = 0
     j = 1
-    initUrl = "https://graph.facebook.com/755985781119509/feed?limit=600&access_token=CAACEdEose0cBAMppwM6sSdb7Qju8qjfFxHXiVFL0qCIuL2iFOURqqC1Gl3KOMZCAqaCN3NeGbYOyLahIArID65Mg84ZBB80s3HoGgWBWCjnan1oyD0OKKF05QgjP4UbduUyif6b3H8MFxQKoC0dJA2EZBHswN75RcVZCQGXC7XZCyDtHMXDAHFAyFrZBMWxQ4ZD"
+    initUrl = "https://graph.facebook.com/" + params[:uid] + "/feed?limit=600&access_token=" + params[:accessToken]
+    puts initUrl
     initProcess(comment_hash, common_hash, j, like_hash, initUrl)
     puts "Final Mapppppppppppppppp#################################"
-    display_commment_map =  comment_hash.sort_by {|k,v| v}.reverse.take(2)
-    puts display_commment_map
-    #puts like_hash
-    #puts comment_hash
-    #puts common_hash
+    #display_commment_map = comment_hash.sort_by { |k, v| v }.reverse.take(2)
+    #puts display_commment_map
+    puts like_hash
+    puts comment_hash
+    puts common_hash
 
   end
 
@@ -125,7 +130,10 @@ class WelcomeController < ApplicationController
     counter.each do |c|
       c.map do |x, y|
         if x.match(/^\d+$/)
-          common_hash[x] = y
+          if x.length > 6
+            common_hash[x] = y
+          end
+
         end
 
       end
