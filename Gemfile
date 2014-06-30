@@ -39,6 +39,12 @@ gem 'rails_12factor', group: :production
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'mysql2', '~>0.3.15'
+gem 'omniauth-facebook', '1.4.0'
+gem "koala", "~> 1.10.0rc"
+gem 'httparty'
+gem 'bootstrap-sass', '2.3.2'
+gem 'haml'
 group :development, :test do
   gem 'sqlite3'
 end

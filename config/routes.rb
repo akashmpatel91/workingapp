@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
-  root 'welcome#index'  
+  get 'welcome/index'
+  get 'welcome/parse', to: 'welcome#parse'
+  root 'welcome#index'
+  get 'auth/facebook/callback', to: 'sessions#create'
+  get 'auth/facebook/setup', to: 'sessions#setup'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
+  get "/auth/failure" => redirect("/")
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
