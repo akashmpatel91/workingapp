@@ -1,0 +1,49 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+
+}
+
+footer {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+table.table.user-list {
+  tr {
+    cursor: pointer;
+  }
+  tr.highlight { 
+    background: rgb(255, 249, 181) !important;
+  }
+}
+.task {
+  border: 1px solid #ddd;
+  padding: 15px;
+  .pending {
+    font-size: 2em;
+    color: #888;
+    padding: 10px 0px;
+  }
+  a.refresh{
+    float: right;
+  }
+}
+
+.collapse {
+  display: none;
+}
+
+.collapse.in {
+  display: block;
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
