@@ -1,1 +1,74 @@
-Hello
+<div class="container">
+  <% if @display_like_map_final != {} %>
+
+      <div class="page-header">
+        <h1>Most Likers</h1>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @display_like_map_final.each do |key, value| -%>
+            <tr>
+              <td><a href="http://www.facebook.com/<%= key.split("-")[0] %>"><%= key.split("-")[1] %></a></td>
+              <td><%= value %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+  <% end %>
+
+
+  <% if @display_commment_map_final != {} %>
+
+      <div class="page-header">
+        <h1>Most Commenters</h1>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @display_commment_map_final.each do |key, value| -%>
+            <tr>
+              <td><a href="http://www.facebook.com/<%= key.split("-")[0] %>"><%= key.split("-")[1] %></a></td>
+              <td><%= value %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+  <% end %>
+
+  <% if @display_common_map_final != {} %>
+
+      <div class="page-header">
+        <h1>Most Repeated ids</h1>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @display_common_map_final.each do |key, value| -%>
+            <tr>
+              <td><a href="http://www.facebook.com/<%= key.split("-")[0] %>"><%= key.split("-")[1] %></a></td>
+              <td><%= value %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+  <% end %>
+</div>

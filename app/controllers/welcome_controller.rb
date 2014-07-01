@@ -17,28 +17,68 @@ class WelcomeController < ApplicationController
   def parse
     puts params[:uid]
     puts params[:accessToken]
-    display_commment_map = {}
+    @display_commment_map = {}
+    @display_commment_map_final = {}
+    @display_like_map = {}
+    @display_like_map_final = {}
+    @display_common_map = {}
+    @display_common_map_final = {}
     like_hash = {}
     comment_hash = {}
     common_hash = {}
     i = 0
     j = 1
     initUrl = "https://graph.facebook.com/" + params[:uid] + "/feed?limit=600&access_token=" + params[:accessToken]
-    puts initUrl
+    #puts initUrl
     initProcess(comment_hash, common_hash, j, like_hash, initUrl)
-    puts "Final Mapppppppppppppppp#################################"
-    #display_commment_map = comment_hash.sort_by { |k, v| v }.reverse.take(2)
-    #puts display_commment_map
-    puts like_hash
-    puts comment_hash
-    puts common_hash
+    #puts "Final Mapppppppppppppppp#################################"
+    @display_commment_map = comment_hash.sort_by { |k, v| v }.reverse.take(5)
+    @display_like_map = like_hash.sort_by { |k, v| v }.reverse.take(5)
+    @display_common_map = common_hash.sort_by { |k, v| v }.reverse.take(5)
+    puts @display_common_map
+
+    @display_commment_map.map do |x, y|
+      json = getName(x)
+      if json['name'] != nil && json['name'] != ''
+        @display_commment_map_final[x +"-"+json['name']] = y
+      else
+        @display_commment_map_final[x] = y
+      end
+      #puts @display_commment_map_final
+    end
+
+    @display_like_map.map do |x, y|
+      json = getName(x)
+      @display_like_map_final[x +"-"+json['name']] = y
+      #puts @display_like_map_final
+    end
+
+    @display_common_map.map do |x, y|
+      json = getName(x)
+      if json['name'] != nil && json['name'] != ''
+        @display_common_map_final[x +"-"+json['name']] = y
+      else
+        @display_common_map_final[x + "-Photo or Page" ] = y
+      end
+
+      puts @display_common_map_final
+    end
+    #puts @display_commment_map
+    #puts like_hash
+    #puts comment_hash
+    #puts common_hash
 
   end
 
+  def getName(x)
+    response = HTTParty.get("http://graph.facebook.com/" +x)
+    json = JSON.parse(response.body)
+  end
+
   def initProcess(comment_hash, common_hash, j, like_hash, initUrl)
-    puts "In the init............."
+    #puts "In the init............."
     response = HTTParty.get(initUrl)
-    puts "putting response"
+    #puts "putting response"
     json = JSON.parse(response.body)
     if json['error'] == nil || json['error'] == ''
       get_common_map(response, common_hash)
@@ -80,7 +120,7 @@ class WelcomeController < ApplicationController
         j = j+1
         next if j.even?
         if x[0] == "next"
-          puts "Outside function"
+          #puts "Outside function"
           likers_page(x[1], like_hash)
         end
       end
@@ -106,19 +146,19 @@ class WelcomeController < ApplicationController
         if json['paging']['next']
           likers_page(json['paging']['next'], like_hash)
         else
-          puts "Out from recursion"
+          #puts "Out from recursion"
         end
       else
-        puts "Failed inside....."
+        #puts "Failed inside....."
       end
     rescue => ex
       @@retryCount += 1
       if @@retryCount <= 5
-        puts "Exception...count" + @@retryCount.to_s
+        #puts "Exception...count" + @@retryCount.to_s
         likers_page(url, like_hash)
       else
         puts "Died... :("
-        puts ex.message
+        #puts ex.message
       end
     end
 
