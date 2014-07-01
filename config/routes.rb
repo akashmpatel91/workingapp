@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/auth/failure" => redirect("/")
   get "/welcome/add",to: 'welcome#add'
   get "/welcome/contact",to: 'welcome#contact'
+  get "/welcome/about",to: 'welcome#about'
 
 
 
