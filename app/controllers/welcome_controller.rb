@@ -23,6 +23,10 @@ class WelcomeController < ApplicationController
     @display_like_map_final = {}
     @display_common_map = {}
     @display_common_map_final = {}
+    @rowComment = {}
+    @rowLike = {}
+    @rowRepeat = {}
+    @error = ""
     like_hash = {}
     comment_hash = {}
     common_hash = {}
@@ -35,7 +39,12 @@ class WelcomeController < ApplicationController
     @display_commment_map = comment_hash.sort_by { |k, v| v }.reverse.take(5)
     @display_like_map = like_hash.sort_by { |k, v| v }.reverse.take(5)
     @display_common_map = common_hash.sort_by { |k, v| v }.reverse.take(5)
-    puts @display_common_map
+
+    @rowComment = comment_hash
+    @rowLike = like_hash
+    @rowRepeat = common_hash
+
+    #puts @display_common_map
 
     @display_commment_map.map do |x, y|
       json = getName(x)
@@ -63,6 +72,7 @@ class WelcomeController < ApplicationController
 
       puts @display_common_map_final
     end
+    @status = "success"
     #puts @display_commment_map
     #puts like_hash
     #puts comment_hash
@@ -93,7 +103,7 @@ class WelcomeController < ApplicationController
 
       end
     else
-      puts "dingoooo.."
+      @error = "Provided access token may expired. Please try to regenerate access token."
     end
   end
 
@@ -153,10 +163,11 @@ class WelcomeController < ApplicationController
       end
     rescue => ex
       @@retryCount += 1
-      if @@retryCount <= 5
+      if @@retryCount <= 10
         #puts "Exception...count" + @@retryCount.to_s
         likers_page(url, like_hash)
       else
+        @error = "Connection died. Please try again."
         puts "Died... :("
         #puts ex.message
       end
@@ -210,6 +221,9 @@ class WelcomeController < ApplicationController
   end
 
   def connect
+
+  end
+  def contact
 
   end
 end

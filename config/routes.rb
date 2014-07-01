@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy', as: 'signout'
   get "/auth/failure" => redirect("/")
   get "/welcome/add",to: 'welcome#add'
+  get "/welcome/contact",to: 'welcome#contact'
 
 
 

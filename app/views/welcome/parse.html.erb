@@ -1,4 +1,16 @@
 <div class="container">
+  <% if @error != "" %>
+      <div class="alert alert-danger" role="alert">
+        <strong><%= @error %></strong> <a href="/welcome/add">Try again. </a>
+      </div>
+  <% end %>
+
+  <% if @status == "success" %>
+      <div class="alert alert-success" role="alert">
+        <strong>Bingo!</strong> Below is you connection graph. <a href="/welcome/add">Try again. </a>
+      </div>
+  <% end %>
+
   <% if @display_like_map_final != {} %>
 
       <div class="page-header">
@@ -71,4 +83,36 @@
         </tbody>
       </table>
   <% end %>
+  <div class="page-header">
+    <h1>Row data for sake of understanding</h1>
+  </div>
+  <div class="list-group">
+    <% if @rowLike != {} %>
+        <a href="#" class="list-group-item active">
+          <h4 class="list-group-item-heading">Row likers</h4>
+
+          <p class="list-group-item-text">
+            <%= @rowLike %>
+          </p>
+        </a>
+    <% end %>
+    <% if @rowLike != {} %>
+        <a href="#" class="list-group-item">
+          <h4 class="list-group-item-heading">Row commenters</h4>
+
+          <p class="list-group-item-text">
+            <%= @rowComment %>
+          </p>
+        </a>
+    <% end %>
+    <% if @rowLike != {} %>
+        <a href="#" class="list-group-item">
+          <h4 class="list-group-item-heading">Row most repeated ids </h4>
+
+          <p class="list-group-item-text">
+            <%= @rowRepeat %>
+          </p>
+        </a>
+    <% end %>
+  </div>
 </div>

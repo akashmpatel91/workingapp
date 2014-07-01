@@ -4,12 +4,12 @@ class SessionsController < ApplicationController
     request.env['omniauth.strategy'].options[:scope] = session[:fb_permissions]
     user = User.from_omniauth(env["omniauth.auth"])
     session[:user_id] = user.id
-    omniauth = request.env["omniauth.auth"]
-    puts "Here it is : " + omniauth['credentials']['token']
-    @graph = Koala::Facebook::API.new(omniauth['credentials']['token'])
-    feed = @graph.get_connections("me", "feed")
-    puts "feeds below"
-    puts feed
+    #omniauth = request.env["omniauth.auth"]
+    #puts "Here it is : " + omniauth['credentials']['token']
+    #@graph = Koala::Facebook::API.new(omniauth['credentials']['token'])
+    #feed = @graph.get_connections("me", "feed")
+    #puts "feeds below"
+    #puts feed
     redirect_to root_url
   end
 
